@@ -1,0 +1,66 @@
+﻿@model IEnumerable<ProyectoFinal.Models.Carrito>
+
+@{
+    ViewData["Title"] = "VerCarrito";
+}
+
+<h1>Resumen de pedido</h1>
+
+@if (TempData["mensaje"] != null)
+{
+    <div class="alert alert-success">
+        <i class="fas fa-check-circle"></i>
+        <h4><strong>@TempData["mensaje"]</strong></h4>
+    </div>
+}
+
+
+<!-- Contenedor para los productos del carrito -->
+<div class="container mt-4">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <!-- Tarjeta para cada producto en el carrito -->
+                <div class="card">
+                    <!-- Imagen del producto -->
+                    <img src="@Url.Content("/Articulos/" + item.Codigo + ".jpg")"
+                         class="card-img-top" alt="@item.NombreProducto" style="max-width: 100%; max-height: 200px; object-fit: contain;">
+
+                    <div class="card-body">
+                        <h5 class="card-title">@item.NombreProducto</h5>
+                        <p><strong>Código:</strong> @item.Codigo</p>
+                        <p><strong>Precio:</strong>s/. @item.Precio</p>
+                        <p><strong>Cantidad:</strong> @item.Cantidad</p>
+                        <p><strong>Importe:</strong>s/. @item.Importe</p>
+ 
+                        <!-- Formulario para modificar la cantidad -->
+                        <form asp-action="ActualizarCantidad" method="post" class="d-flex justify-content-between align-items-center">
+                            <input type="hidden" name="id" value="@item.Codigo" />
+                            <input type="number" name="cantidad" class="form-control text-center" value="@item.Cantidad" min="1" style="width: 100px;" />
+                            <button type="submit" class="btn btn-primary btn-sm">Actualizar</button>
+                        </form>
+                    </div>
+                    <div class="card-footer text-center">
+                        <a href="@Url.Action("EliminarProducto",
+                            new { id = item.Codigo })" class="btn btn-danger">Eliminar
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="card-footer text-center">
+    <h2 class="total-header">Total de compra: <strong>@ViewBag.total</strong></h2>
+</div>
+<div class="text-center mt-4">
+    <a href="@Url.Action("FormularioCompra")" class="btn btn-success btn-lg">
+    Continuar <i class="fas fa-arrow-right"></i>
+    </a>
+</div>
+
+

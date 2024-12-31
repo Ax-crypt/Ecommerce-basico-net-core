@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "CompraExitosa";
+}
+
+<h1>Compra Exitosa</h1>
+
+<div class="alert alert-success text-center mt-4">
+    <i class="fas fa-check-circle"></i>
+    <h4>@ViewBag.Mensaje</h4>
+</div>
+
+<div class="text-center mt-4">
+    <a href="@Url.Action("IndexProductos")" class="btn btn-primary btn-lg">Volver a la tienda</a>
+</div>
